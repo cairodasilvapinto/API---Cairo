@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+    ilhaconectada_db:
+        image: postgres
+        container_name: ilhaconectada_db
+        restart: always     
+        ports:
+            - 5432:5432   
+        environment:
+            - POSTGRES_USER=docker
+            - POSTGRES_PASSWORD=ilhaconectada
+            - POSTGRES_DB=ilhaconectada
+        volumes:
+            - pgdata:/data/postgres        
+        network_mode: "bridge" 
+    app:
+        build: .
+        container_name: ilhaconectada_app
+        ports:
+            - 3333:3333
+        volumes:
+            - .:/usr/app
+        network_mode: "bridge"
+
+
+volumes:
+    pgdata:

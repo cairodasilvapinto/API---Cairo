@@ -1,0 +1,145 @@
+{
+    "openapi" : "3.0.0",
+    "info" : {
+        "title" : "Ilha Conectada Documentation",
+        "description" : "Ilha Conectada API",
+        "version" : "1.0.0",
+        "contact" : {
+            "email" : "ilhaconectada@Ilhasolteira.sp.gov.br"
+        }
+    },
+    "paths" : {
+        "/profiles" : {
+            "post" : {
+                "tags": ["Profile"],
+                "summary" : "Create a Profile",
+                "description" : "Create a new Profile",
+                "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type": "object",
+                                "proprieties" : {
+                                    "name" : {
+                                        "type" : "string"
+                                    },
+                                    "description" : {
+                                        "type" : "string"
+                                    }
+                                },
+                                "example" : {
+                                    "name" : "Profile name sample",
+                                    "description" : "Profile description sample"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses" : {
+                    "201" : {
+                        "description" : "Created"
+                    },
+                    "500" : {
+                        "description" : "Profile already exists"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Profile"],
+                "summary": "List all profiles",
+                "description" : "List all profiles",
+                "responses" : {
+                    "200" : {
+                        "description" : "Success",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "type" : "array",
+                                    "items" : {
+                                        "type" : "object",
+                                        "proprieties": {
+                                            "name" : {
+                                                "type" : "string"
+                                            },
+                                            "description" : {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/profiles/import" : {
+           "post" : {
+                "tags": ["Profile"],
+                "summary" : "Upload new profiles",
+                "description" : "Upload a new profiles",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema" : {
+                                "type": "object",
+                                "properties" : {
+                                    "file" : {
+                                       "type": "string",
+                                       "format": "binary" 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+           } ,
+            "responses" : {
+                "201": {
+                    "description": "Created"
+                }     
+           }
+        },
+        "/users" : {
+                "post" : {
+                    "tags" : ["User"],
+                    "summary" : "Create a user",
+                    "description" : "Create a new user",
+                    "requestBody" : {
+                        "content" : {
+                            "application/json": {
+                                "schema" :{
+                                    "$ref" : "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "201":{
+                            "description": "Created"
+                        },
+                        "500": {
+                            "description" :"User already exists"
+                        }
+                    }
+                }
+        }        
+
+    },
+    "definitions" : {
+        "User": {
+            "type": "object",
+            "properties": {
+                "name" : {
+                    "type": "string" 
+                },
+                "email" : {
+                    "type" : "string"
+                },
+                "cpf": {
+                    "type" : "string"
+                }
+            }
+        }
+    }
+}
